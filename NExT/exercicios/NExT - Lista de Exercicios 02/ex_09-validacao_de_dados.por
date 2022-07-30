@@ -23,30 +23,31 @@ programa
 		condicao3 = salario > 0
 
 		escreva("=====================\n")
+		
 		se(condicao1 e condicao2 e condicao3){
 			escreva("Dados Corretos: \n")
-			escreva("Nome: ", nome,"\n")
-			escreva("Idade: ", idade," anos\n")
-			escreva("Salário: R$", salario,"\n")
-			
 		}senao{
-			
-			se(nao condicao1){
-				nome = "incorreto"
-			}
-			se(nao condicao2){
-				Tipos.inteiro_para_cadeia(idade,10)
-				idade = "incorreto"
-			}
-			se(nao condicao1){
-				nome = "incorreto"
-			}
-
 			escreva("Dados Incorretos: \n")
-			escreva("Nome: ", nome,"\n")
-			escreva("Idade: ", idade," anos\n")
-			escreva("Salário: R$", salario,"\n")
 		}
+			
+		se(condicao1){
+			escreva("Nome: ", nome,"\n")	
+		}senao{
+			escreva("Nome: incorreto \n")
+		}
+
+		se(condicao2){
+			escreva("Idade: ", idade," anos\n")
+		}senao{
+			escreva("Idade: incorreto\n")
+		}
+
+		se(condicao3){
+			escreva("Salário: R$", salario,"\n")
+		}senao{
+			escreva("Salário: incorreto \n")
+		}
+			
 		escreva("=====================\n")
 	}
 }
@@ -56,7 +57,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 841; 
+ * @POSICAO-CURSOR = 996; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
