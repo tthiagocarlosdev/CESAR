@@ -2,15 +2,17 @@ programa
 {
 	inclua biblioteca Tipos
 	
-	//declaração de funções
+	//declaração de funções
 
 	//funções cabeçalho - funções cabeçalho - funções cabeçalho - funções cabeçalho
+	//função cabeçalho - mostra o título programa
 	funcao cabecalho(){
 		escreva("==============================\n")
 		escreva("      Dados Demográficos\n")
 		escreva("==============================\n")
 	}
 
+	//função menu - mostra um menu com opções
 	funcao menu(cadeia variavel1, cadeia variavel2, cadeia variavel3){
 		
 		escreva("[1]",variavel1,"\n")
@@ -18,6 +20,9 @@ programa
 		escreva("[3]",variavel3,"\n")
 	}
 
+	/*função menssagem de Erro - mostra uma menssagem de erro 
+	 caso o usuário digite um valor inválido!
+	 */
 	funcao menssagemErro(logico valor1, logico valor2){
 
 		se(valor1 ou valor2){
@@ -29,7 +34,9 @@ programa
 
 	//funções de validação - funções de validação - funções de validação
 	
-	//validação de inteiro
+	/*função é inteiro - valida se o valor digitado pelo usuário é um número inteiro.
+	 Retorna um valor lógico!
+	 */
 	funcao logico ehInteiro(cadeia valor){
 		
 		logico ehNumero = Tipos.cadeia_e_inteiro(valor, 10)
@@ -37,7 +44,9 @@ programa
 		retorne ehNumero
 	}
 
-	//validação de valor
+	/*função valor certo - valida se o valor digitado pelo usuário 
+	  está dentro do intervalo permitido. Retorna um valor lógico.
+	 */
 	funcao logico valorCerto(cadeia valor){
 		
 		inteiro numero = Tipos.cadeia_para_inteiro(valor, 10)
@@ -52,86 +61,61 @@ programa
 
 	//funções gerais - funções gerais - funções gerais - funções gerais - funções gerais
 
-	//função gênero
-	funcao inteiro genero(){
+	/*função Dados Demograficos - recebe as pções de menu, pede para o usuário para 
+	 escolher dentre uma das opções e retorna um número validado com a escolha 
+	 do usuário.
+	 */
+	funcao inteiro dadosDemograficos(cadeia opcaoA, cadeia opcaoB, cadeia opcaoC){
 
 		logico ehNumero = falso
 		logico valorCorreto = falso
 		inteiro numero = 0
-		cadeia sexo
+		cadeia variavel
 		
 		faca{
-
-			menu("masculino", "feminino", "outros")
-			leia(sexo)
 			
-			ehNumero = ehInteiro(sexo)
+			menu(opcaoA, opcaoB, opcaoC)
+			leia(variavel)
+			
+			ehNumero = ehInteiro(variavel)
 			
 			se(ehNumero){
-				valorCorreto = valorCerto(sexo)
+				valorCorreto = valorCerto(variavel)
 			}
 
 			menssagemErro(nao ehNumero, nao valorCorreto)
 	
 		}enquanto(nao ehNumero ou nao valorCorreto)
 		
-		numero= Tipos.cadeia_para_inteiro(sexo, 10)
+		numero = Tipos.cadeia_para_inteiro(variavel, 10)
 	
 		retorne numero
 	}
 
-	//função Cor dos olhos
-	funcao inteiro corOlhos(){
+	/*função Idade - solicita ao usuário digitar a sua idade e valida 
+	 a idade digitada. Retorna um número inteiro.
+	 */
+	funcao inteiro idade(cadeia questao){
 
 		logico ehNumero = falso
-		logico valorCorreto = falso
 		inteiro numero = 0
-		cadeia cor
+		cadeia variavel
 		
 		faca{
 
-			menu("azul", "verde", "castanho")
-			leia(cor)
+			leia(variavel)
 			
-			ehNumero = ehInteiro(cor)
+			ehNumero = ehInteiro(variavel)
+
+			menssagemErro(nao ehNumero, falso)
 			
-			se(ehNumero){
-				valorCorreto = valorCerto(cor)
+			se(nao ehNumero){
+				escreva(questao)
 			}
-
-			menssagemErro(nao ehNumero, nao valorCorreto)
 	
-		}enquanto(nao ehNumero ou nao valorCorreto)
+		}enquanto(nao ehNumero)
 		
-		numero = Tipos.cadeia_para_inteiro(cor, 10)
-	
-		retorne numero
-	}
-
-	//função cor dos cabelos
-	funcao inteiro corCabelos(){
-
-		logico ehNumero = falso
-		logico valorCorreto = falso
-		inteiro numero = 0
-		cadeia cor
-		
-		faca{
-
-			menu("loiro", "castanho", "preto")
-			leia(cor)
-			
-			ehNumero = ehInteiro(cor)
-			
-			se(ehNumero){
-				valorCorreto = valorCerto(cor)
-			}
-
-			menssagemErro(nao ehNumero, nao valorCorreto)
-	
-		}enquanto(nao ehNumero ou nao valorCorreto)
-		
-		numero = Tipos.cadeia_para_inteiro(cor, 10)
+		numero = Tipos.cadeia_para_inteiro(variavel, 10)
 	
 		retorne numero
 	}
@@ -141,9 +125,9 @@ programa
 	funcao inicio()
 	{
 		//declaração de variáveis
-		const inteiro QUANT_DE_ALUNOS = 3
-		inteiro generoAlunos[QUANT_DE_ALUNOS], corDosOlhos[QUANT_DE_ALUNOS], corDosCabelos[QUANT_DE_ALUNOS]
-		inteiro generoFeminino = 0, olhosCastanhos = 0, cabelosPreto = 0
+		const inteiro QUANT_DE_ALUNOS = 10
+		inteiro generoAlunos[QUANT_DE_ALUNOS], corDosOlhos[QUANT_DE_ALUNOS]
+		inteiro corDosCabelos[QUANT_DE_ALUNOS], idade18e35[QUANT_DE_ALUNOS]
 		//alunos do gênero feminino, idade entre 18 e 35 anos com olhos castanhos e cabelos pretos
 		inteiro aluna18e35CastanhoPreto = 0
 		
@@ -152,30 +136,25 @@ programa
 			limpa()
 			cabecalho()
 			escreva("Escolha o gênero do aluno ", i+1,": \n")
-			generoAlunos[i] = genero()
+			generoAlunos[i] = dadosDemograficos("masculino", "feminino", "outros")
 			escreva("Escolha a cor dos olhos do aluno ", i+1,": \n")
-			corDosOlhos[i] = corOlhos()
+			corDosOlhos[i] = dadosDemograficos("azul", "verde", "castanho")
 			escreva("Escolha a cor dos cabelos do aluno ", i+1,": \n")
-			corDosCabelos[i] = corCabelos()
+			corDosCabelos[i] = dadosDemograficos("loiro", "castanho", "preto")
+			escreva("Digite a idade do aluno ", i+1,": \n")
+			idade18e35[i] = idade("Digite a idade: ")
 		}
 		
 		
 		//processamento de dados
 		para(inteiro i = 0; i < QUANT_DE_ALUNOS; i++){
+			
 			logico alunosFeminino = generoAlunos[i] == 2
 			logico alunosOlhosCastanhos = corDosOlhos[i] == 3
 			logico alunosCabeloPreto = corDosCabelos[i] == 3
+			logico alunoIdade18a35 = idade18e35[i] >= 18 e idade18e35[i] <= 35
 			
-			se(alunosFeminino){
-				generoFeminino++
-			}
-			se(alunosOlhosCastanhos){
-				olhosCastanhos++
-			}
-			se(alunosCabeloPreto){
-				cabelosPreto++
-			}
-			se(alunosFeminino e alunosOlhosCastanhos e alunosCabeloPreto){
+			se(alunosFeminino e alunosOlhosCastanhos e alunosCabeloPreto e alunoIdade18a35){
 				aluna18e35CastanhoPreto++
 			}
 		}
@@ -183,24 +162,7 @@ programa
 		//saída de dados
 		limpa()
 		cabecalho()
-		escreva("Genero Feminino: ",generoFeminino,"\n")
-		escreva("olhos castanhos: ", olhosCastanhos,"\n")
-		escreva("cabelos preto: ", cabelosPreto,"\n")
-		
-		para(inteiro i = 0; i < QUANT_DE_ALUNOS; i++){
-			escreva(generoAlunos[i], " ")
-		}
-		escreva("\n")
-		
-		para(inteiro i = 0; i < QUANT_DE_ALUNOS; i++){
-			escreva(corDosOlhos[i], " ")
-		}
-		escreva("\n")
-		para(inteiro i = 0; i < QUANT_DE_ALUNOS; i++){
-			escreva(corDosCabelos[i], " ")
-		}
-		escreva("\n")
-		escreva("Quantidade de alunos do gênero feminino,\nidade entre 18 e 35 anos,\ncom olhos castanhos e cabelos pretos: ")
+		escreva("Quantidade de indivíduos do gênero feminino,\nidade entre 18 e 35 anos,\ncom olhos castanhos e cabelos pretos: ")
 		escreva(aluna18e35CastanhoPreto,"\n")
 		escreva("==============================\n")
 	
@@ -212,7 +174,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 4143; 
+ * @POSICAO-CURSOR = 2943; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
