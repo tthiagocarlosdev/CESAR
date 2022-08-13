@@ -5,7 +5,7 @@ programa
 	//declaração de funções
 
 	//funções cabeçalho - funções cabeçalho - funções cabeçalho - funções cabeçalho
-	//declaração de funções
+	//função cabeçalho - mostra o título programa
 	funcao cabecalho(){
 		escreva("==============================\n")
 		escreva("       Média das idades\n")
@@ -104,7 +104,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 2017; 
+ * @POSICAO-CURSOR = 1513; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = {contador, 71, 10, 8};
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
