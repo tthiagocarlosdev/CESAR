@@ -14,28 +14,25 @@ programa
 	}
 
 	//função menu - recebe um vetor como parâmentro e mostra um menu com opções deste vetor.
-	funcao menu(cadeia variaveis[], inteiro indices[]){
+	funcao menu(cadeia variavel, inteiro total, cadeia lista[]){
 
-		inteiro tamanhoMenu = Util.numero_elementos(variaveis)
-		
-		para(inteiro i = 0; i < tamanhoMenu; i++){
-			se(i == indices[i]){
-				escreva("[",indices[i]+1,"] - ",variaveis[i],"\n")	
+		escreva("Escolha o remédio: \n")
+		para(inteiro i = 0; i < total; i++){
+			se(variavel == lista[i]){
+				escreva("[",i,"]", lista[i],"\n")
 			}
-			
 		}
 	}
 
 	/*função menssagem de Erro - mostra uma menssagem de erro 
 	 caso o usuário digite um valor inválido!
 	 */
-	funcao menssagemErro(logico valor1, logico valor2, cadeia questao){
+	funcao menssagemErro(logico valor1, logico valor2){
 
 		se(valor1 ou valor2){
 			limpa()
 			escreva("Valor incorreto!\n")
 			escreva("Insira um valor correto!\n")
-			escreva(questao,"\n")
 		}
 	}
 
@@ -51,31 +48,21 @@ programa
 		retorne ehNumero
 	}
 
-	/*função número válido - solicita ao usuário digitar um número e valida 
-	 o mesmo. Retorna um número inteiro.
+	/*função valor certo - valida se o valor digitado pelo usuário 
+	  está dentro do intervalo permitido. Retorna um valor lógico.
 	 */
-	funcao inteiro numeroValido(cadeia questao, inteiro indices[], cadeia variaveisMenu[]){
-
-		logico ehNumero = falso
-		logico valorCorreto = falso
-		inteiro numero = 0
-		cadeia variavel
+	funcao logico valorCerto(inteiro lista[], inteiro tamanhoLista, cadeia valor){
 		
-		faca{
-
-			escreva(questao,"\n")
-			menu(variaveisMenu, indices)
-			leia(variavel)
-			
-			ehNumero = ehInteiro(variavel)
-
-			menssagemErro(nao ehNumero, falso, questao)
-	
-		}enquanto(nao ehNumero)
+		inteiro numero = Tipos.cadeia_para_inteiro(valor, 10)
+		logico correto = falso
 		
-		numero = Tipos.cadeia_para_inteiro(variavel, 10)
-	
-		retorne numero
+		para(inteiro i = 0; i < tamanhoLista; i++){
+			se(numero == lista[i]){
+				correto = verdadeiro
+			}	
+		}
+		
+		retorne correto	
 	}
 
 	//Início do programa - Início do programa - Início do programa - Início do programa
@@ -84,67 +71,62 @@ programa
 		//declaração de variáveis
 		const inteiro QUANTIDADE_DE_REMEDIO = 8
 		cadeia sintoma, valorRemedio = ""
-		inteiro numeroRemedio = 0
-		cadeia precosRemedios[QUANTIDADE_DE_REMEDIO] = {"2,40", "10,50", "8,25", "8,20", "5,50", "12,80", "11,10", "15,30"}
+		inteiro numeroRemedio
+		cadeia listaDeSintomas[QUANTIDADE_DE_REMEDIO] = {"azia", "dor de cabeça", "dor muscular", "dor de cabeça", "gases", "dor muscular", "enjoo", "enjoo"}
 		cadeia listaRemedios[QUANTIDADE_DE_REMEDIO] = {"Buxin", "Cabeçã", "Relashow", "Leuza", "Catapum", "Geslado", "Dramatic", "PaDetrum"}
-		inteiro remediosAzia[QUANTIDADE_DE_REMEDIO] = {0, -1, -1, -1, -1, -1, -1, -1}
-		inteiro remediosDorDeCabeca[QUANTIDADE_DE_REMEDIO] = {-1, 1, -1, 3, -1, -1, -1, -1}
-		inteiro remediosDorMuscular[QUANTIDADE_DE_REMEDIO] = {-1, -1, 2, -1, -1, 5, -1, -1}
-		inteiro remediosGases[QUANTIDADE_DE_REMEDIO] = {-1, -1, -1, -1, 4, -1, -1, -1}
+		cadeia precosRemedios[QUANTIDADE_DE_REMEDIO] = {"2,40", "10,50", "8,25", "8,20", "5,50", "12,80", "11,10", "15,30"}
 		
 		//entrada de dados
 		cabecalho()
 		escreva("Seja bem-vindo ao nosso chat bot!\n")
 		escreva("Descreva qual o seu sintoma: ")
 		leia(sintoma)
+		limpa()
 		
 		//processamento de dados
 		sintoma = Texto.caixa_baixa(sintoma)
+
+		logico ehNumero = falso
+		logico valorCorreto = falso
+		cadeia numero
+		cadeia variavel
+		inteiro contador = 0
+		inteiro valores[QUANTIDADE_DE_REMEDIO]
 		
-		se(sintoma == "azia"){
-			numeroRemedio = numeroValido("Escolha o remédio: ", remediosAzia, listaRemedios)
-		}senao se(sintoma == "dor de cabeça"){
-			numeroRemedio = numeroValido("Escolha o remédio: ", remediosDorDeCabeca, listaRemedios)
-		}senao se(sintoma == "dor muscular"){
-			numeroRemedio = numeroValido("Escolha o remédio: ", remediosDorMuscular, listaRemedios)
-		}senao se(sintoma == "gases"){
-			numeroRemedio = numeroValido("Escolha o remédio: ", remediosGases, listaRemedios)
-		}
+		faca{
+
+			cabecalho()
+			contador = 0
+			escreva("Escolha o remédio: \n")
+			para(inteiro i = 0; i < QUANTIDADE_DE_REMEDIO; i++){
+				se(sintoma == listaDeSintomas[i]){
+					escreva("[",i,"]", listaRemedios[i],"\n")
+					valores[contador] = i
+					contador++
+				}
+			}
+			leia(numero)
+			
+			ehNumero = ehInteiro(numero)
+			
+			se(ehNumero){
+				valorCorreto = valorCerto(valores, contador, numero)
+			}
+
+			menssagemErro(nao ehNumero, nao valorCorreto)
+	
+		}enquanto(nao ehNumero ou nao valorCorreto)
 		
-		escolha(numeroRemedio){
-			caso 1:
-				valorRemedio = precosRemedios[0]
-			pare
-			caso 2:
-				valorRemedio = precosRemedios[1]
-			pare
-			caso 3:
-				valorRemedio = precosRemedios[2]
-			pare
-			caso 4:
-				valorRemedio = precosRemedios[3]
-			pare
-			caso 5:
-				valorRemedio = precosRemedios[4]
-			pare
-			caso 6:
-				valorRemedio = precosRemedios[5]
-			pare
-			caso 7:
-				valorRemedio = precosRemedios[6]
-			pare
-			caso 8:
-				valorRemedio = precosRemedios[7]
-			pare
-			caso contrario:
-				valorRemedio = "Entre em contato com o farmacêutico!\n"
-		}
+		numeroRemedio = Tipos.cadeia_para_inteiro(numero , 10)
+
+		valorRemedio = precosRemedios[numeroRemedio]
+		
 		
 		//saída de dados
-		escreva("\n")
-		escreva(sintoma,"\n")
-		escreva("Valor do Remédio: R$", valorRemedio)
-		
+		limpa()
+		cabecalho()
+		escreva("Valor do Remédio: R$", valorRemedio,"\n")
+		escreva("==============================\n")
 	
 	}
 }
@@ -154,9 +136,9 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 3464; 
+ * @POSICAO-CURSOR = 3458; 
  * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
+ * @SIMBOLOS-INSPECIONADOS = {numero, 91, 9, 6}-{contador, 93, 10, 8}-{valores, 94, 10, 7};
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
  * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
  */
